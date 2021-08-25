@@ -1,0 +1,22 @@
+#
+# Build stage
+#
+FROM maven:ibmjava-alpine AS javaBuild
+
+WORKDIR /build
+
+COPY src src
+COPY pom.xml pom.xml
+
+RUN mvn clean package
+
+#
+# Package stage
+#
+FROM openjdk:8-alpine
+
+WORKDIR /multi-stage-app
+
+COPY --from=javaBuild /build/target/websocket-demo-0.0.1-SNAPSHOT.jar .
+
+CMD ["java","-Djava.security.egd=file:/dev/./urandom","-jar","websocket-demo-0.0.1-SNAPSHOT.jar"]
