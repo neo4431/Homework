@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{./css/index.css}">
+    <title>Home</title>
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div id="container">
+    <h1>Product Manager</h1>
+    <div><a th:href="@{/add}">Create New Product</a></div>
+    <table>
+        <thead>
+            <th><span id="id">Product ID</span></th>
+            <th><span id="name">Name</span></th>
+            <th><span id="brand">Brand</span></th>
+            <th><span id="madeIn">Made In</span></th>
+            <th><span id="price">Price</span></th>
+            <th>Actions</th>
+        </thead>
+        <tbody>
+            <tr th:each="product: ${products}">
+                <td th:text="${product.id}"></td>
+                <td>[(${product.name})]</td>
+                <td>[(${product.brand})]</td>
+                <td>[(${product.madeIn})]</td>
+                <td>[(${product.price})]</td>
+                <td class="actions">
+                    <a th:href="@{/edit/{id}(id = ${product.id})}">Edit</a>
+                    <a th:href="@{/delete/{id}(id = ${product.id})}">Delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div id="page">
+        <div id="page-item" >
+            <span>Total Items: [(${totalItems})] items </span>
+            <span>&nbsp;- Page: [(${currentPage})] of [(${totalPages})] -</span>
+            <button id="btn-first" class="btn-move-page">First</button>
+            <button id="btn-previous" class="btn-move-page">Previous</button>
+            <button class="page-number" th:each="i : ${#numbers.sequence(1, totalPages)}">[(${i})]</button>
+            <button id="btn-next" class="btn-move-page">Next</button>
+            <button id="btn-last" class="btn-move-page">Last</button>
+        </div>
+    </div>
+</div>
+<script th:src="@{./js/index.js}"></script>
+</body>
+</html>
