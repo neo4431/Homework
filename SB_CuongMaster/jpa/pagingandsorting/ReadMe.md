@@ -20,5 +20,5 @@
 ![invoke](./photos/functioninvoke.png)
 - Hàm xử lý di chuyển page
 ![page](./photos/paging.png)
-- Hàm xử lý sắp xếp
+- Hàm xử lý sắp xếp khi click vào tên các trường trên màn hình danh sách product
 ![page](./photos/sorting.png)
