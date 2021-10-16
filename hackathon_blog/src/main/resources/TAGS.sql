@@ -1,0 +1,12 @@
+insert into TAGS (id, name) values (1, 'EUCALYPTUS GLOBULUS');
+insert into TAGS (id, name) values (2, 'smart sense ibuprofen');
+insert into TAGS (id, name) values (3, 'The Natural Dentist');
+insert into TAGS (id, name) values (4, 'INSTANT HAND SANITIZER');
+insert into TAGS (id, name) values (5, 'AmmoniaN 13');
+insert into TAGS (id, name) values (6, 'Glimepiride');
+insert into TAGS (id, name) values (7, 'Ibuprofen');
+insert into TAGS (id, name) values (8, 'Topcare Antacid');
+insert into TAGS (id, name) values (9, 'Mucus Relief DM');
+insert into TAGS (id, name) values (10, 'MINOCYCLINE HYDROCHLORIDE');
+insert into TAGS (id, name) values (11, 'Univasc');
+insert into TAGS (id, name) values (12, 'Oxygen');

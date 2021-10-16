@@ -6,10 +6,14 @@ import java.util.Optional;
 
 import com.homework.shopingcart.model.Product;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class ProducRepository {
+    @Autowired
+    ProducRepo repo;
+
     private List<Product> products;
     private Long nextId;
 
@@ -23,7 +27,8 @@ public class ProducRepository {
     public Long createProduct(Product product){
         product.setId(nextId);
         nextId += 1;
-        products.add(product);
+        // .add(product);
+        repo.save(product);
         return nextId;
     }
 
