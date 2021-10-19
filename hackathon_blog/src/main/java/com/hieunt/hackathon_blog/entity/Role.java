@@ -3,6 +3,7 @@ package com.hieunt.hackathon_blog.entity;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,6 +13,7 @@ import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString.Exclude;
 
 //To use the @Data annotation you should add the Lombok dependency.
 @Data
@@ -27,6 +29,7 @@ public class Role {
 
     private String name;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
+    @Exclude
     private List<User> users;
 }

@@ -12,6 +12,7 @@ import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString.Exclude;
 
 //To use the @Data annotation you should add the Lombok dependency.
 @Data
@@ -28,5 +29,6 @@ public class Tag{
     private String name;
 
     @ManyToMany(mappedBy = "tags")
+    @Exclude
     private List<Post> posts;
 }

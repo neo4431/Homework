@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{nav_template.html}"
+>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .table{
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div layout:fragment="content">
+        <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Username</th>
+                <th scope="col">Role</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="user : ${users}">
+                <td>[(${user.fullName})]</td>
+                <td><span th:each="role, state : ${user.roles}">[(${role.name})]<span th:if="${state.index} < ${user.roles.size} - 1">, </span></span>
+                    
+                </td>
+                <td><a th:href="@{/admin/users/edit/{id}(id=${user.id})}">Edit</a></td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+</body>
+</html>

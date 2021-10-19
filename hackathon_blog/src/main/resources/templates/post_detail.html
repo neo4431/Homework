@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{nav_template.html}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      a {
+        margin-left: 20px !important;
+        margin-bottom: 10px;
+      }
+      .blockquote {
+        margin-left: 20px;
+      }
+      .comment {
+        margin-left: 20px;
+        display: none;
+      }
+      .btn-save-comment {
+        display: block;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div layout:fragment="content">
+      <h1>[(${post.title})] - [(${post.user.fullName})]</h1>
+      <p>
+        <span th:text="${formatDate}"></span>
+        <span th:each="tag : ${post.tags}">[(${tag.name})] </span>
+      </p>
+      <p>[(${post.content})]</p>
+      <hr />
+      <div class="edit-delete-container">
+        <a
+          class="btn-delete btn btn-danger"
+          th:href="@{/post/delete/{id}(id=${post.id})}"
+          role="button"
+          th:if="${post.user.id} == ${user.id}"
+          >Delete</a
+        >
+        <a
+          class="btn-delete btn btn-danger"
+          th:href="@{/post/delete/{id}(id=${post.id})}"
+          role="button"
+          sec:authorize="hasAnyAuthority('admin','editor')"
+          th:unless="${post.user.id} == ${user.id}"
+          >Delete</a
+        >
+        <a
+          class="btn-edit btn btn-primary"
+          th:href="@{/post/edit/{id}(id=${post.id})}"
+          role="button"
+          th:if="${post.user.id} == ${user.id}"
+          >Edit</a
+        >
+        <a
+          class="btn-delete btn btn-danger"
+          th:href="@{/post/edit/{id}(id=${post.id})}"
+          role="button"
+          sec:authorize="hasAnyAuthority('admin','editor')"
+          th:unless="${post.user.id} == ${user.id}"
+          >Edit</a
+        >
+      </div>
+      <div>
+        <a
+          class="btn-comment btn btn-primary"
+          data-toggle="collapse"
+          data-target="#collapseExample"
+          aria-expanded="false"
+          aria-controls="collapseExample"
+          th:href="@{/post/edit/{id}(id=${post.id})}"
+          role="button"
+          >Comment</a
+        >
+      </div>
+      <div class="collapse comment" id="collapseExample">
+        <form th:action="@{/posts/{id}/add-comment(id=${post.id})}" method="post" th:object="${comment}">
+          <label for="comment"></label>
+          <textarea name="comment" id="" cols="30" rows="10" th:field="*{content}"></textarea>
+          <!-- <button type="button" class="btn-save-comment btn btn-primary">
+            Save Comment
+          </button> -->
+          <input type="submit" value="Save Comment">
+        </form>
+      </div>
+      <blockquote class="blockquote mt-3" th:each="comment: ${post.comments}">
+        <p class="mb-3" th:text="${comment.content}"></p>
+        <footer class="blockquote-footer">
+          <a href="#" th:text="${comment.user.fullName}"></a>
+        </footer>
+      </blockquote>
+    </div>
+  </body>
+</html>

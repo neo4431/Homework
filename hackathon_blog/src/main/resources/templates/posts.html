@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{nav_template.html}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Posts</title>
+  </head>
+  <body>
+    <div layout:fragment="content">
+      <table class="table">
+        <thead class="thead-dark">
+          <tr
+            th:if="${#request.getParameter('isAsc')} != null"
+            th:with="orderVariable = ${#request.getParameter('isAsc')} ? false : true"
+          >
+            <th scope="col">
+              <a th:href="@{/posts?sort=poster} + '&isAsc=' + ${orderVariable}"
+                >Poster</a
+              >
+            </th>
+            <th scope="col">
+              <a th:href="@{/posts?sort=title} + '&isAsc=' + ${orderVariable}"
+                >Title</a
+              >
+            </th>
+            <th scope="col">
+              <a
+                th:href="@{/posts?sort=last-update} + '&isAsc=' + ${orderVariable}"
+                >Update Time</a
+              >
+            </th>
+            <h1>[(${orderVariable})]</h1>
+          </tr>
+          <tr
+            th:if="${#request.getParameter('isAsc')} == null"
+            th:with="orderVariable = true"
+          >
+            <th scope="col">
+              <a th:href="@{/posts?sort=poster} + '&isAsc=' + ${orderVariable}"
+                >Poster</a
+              >
+            </th>
+            <th scope="col">
+              <a th:href="@{/posts?sort=title} + '&isAsc=' + ${orderVariable}"
+                >Title</a
+              >
+            </th>
+            <th scope="col">
+              <a
+                th:href="@{/posts?sort=last-update} + '&isAsc=' + ${orderVariable}"
+                >Update Time</a
+              >
+            </th>
+            <h1>[(${orderVariable})]</h1>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="post : ${posts}">
+            <td>
+              <a th:href="@{/posts/user/{userId}(userId=${post.user.id})}"
+                >[(${post.user.fullName})]</a
+              >
+            </td>
+            <td>[(${post.title})]</td>
+            <td>[(${post.lastUpdate})]</td>
+          </tr>
+        </tbody>
+      </table>
+      <div>
+        <ul class="pagination">
+          <li
+            class="page-item"
+            th:classappend="${currentPage} == 1 ? 'disabled' : ''"
+          >
+            <a
+              class="page-link"
+              th:href="@{/index?page={page}(page=${currentPage - 1})}"
+              >Previous</a
+            >
+          </li>
+          <li
+            class="page-item"
+            th:each="i : ${#numbers.sequence(1, totalPage)}"
+          >
+            <a class="page-link" th:href="@{/index?page={i}(i=${i})}"
+              >[(${i})]</a
+            >
+          </li>
+          <li
+            class="page-item"
+            th:classappend="${currentPage} == ${totalPage} ? 'disabled' : ''"
+          >
+            <a
+              class="page-link"
+              th:href="@{/index?page={page}(page=${currentPage + 1})}"
+              >Next</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>

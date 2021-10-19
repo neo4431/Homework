@@ -3,16 +3,17 @@ package com.hieunt.hackathon_blog.entity;
 import java.sql.Timestamp;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import lombok.Data;
+import lombok.ToString.Exclude;
 
 //To use the @Data annotation you should add the Lombok dependency.
 @Data
@@ -29,12 +30,18 @@ public class Comment {
     // @Temporal(TemporalType.TIMESTAMP)
     private Timestamp lastUpdate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @Exclude
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
+    @Exclude
     private Post post;
 
+    @PrePersist
+    public void setTime(){
+        this.lastUpdate =  new Timestamp(System.currentTimeMillis());
+    }
 }

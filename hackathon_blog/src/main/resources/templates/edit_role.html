@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{nav_template.html}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #edit-content > form {
+        display: flex;
+        /* flex-direction: column; */
+        width: 40%;
+        margin-right: auto;
+        margin-left: auto;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .list-role > div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      label {
+        margin: 0;
+        padding-left: 10px;
+        font-size: 20px;
+      }
+      p {
+        font-size: 20px;
+      }
+      .list-role {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+      }
+      h1 {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div layout:fragment="content">
+      <h1>Edit Role - [(${user.fullName})]</h1>
+      <div id="edit-content">
+        <form th:action="@{/admin/users/edit}" method="post" th:object="${user}">
+            <input type="hidden" name="id" th:field="*{id}"/>
+            <input type="hidden" name="fullName" th:field="*{fullName}"/>
+            <input type="hidden" name="email" th:field="*{email}"/>
+            <input type="hidden" name="password" th:field="*{password}"/>
+          <p>User Role:</p>
+          <div class="list-role">
+            <div th:each="role : ${roles}">
+              <input
+                type="checkbox"
+                th:id="${role.id}"
+                th:value="${role.id}"
+                th:field="*{roles}"
+              />
+              <label th:for="${role.id}">[(${role.name})]</label
+              ><br />
+            </div>
+            <input type="submit" value="Submit" />
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

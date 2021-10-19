@@ -14,11 +14,12 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import lombok.Data;
+import lombok.ToString.Exclude;
 
 //To use the @Data annotation you should add the Lombok dependency.
 @Data
@@ -42,6 +43,7 @@ public class Post {
     private User user;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @Exclude
     private List<Comment> comments;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -69,5 +71,15 @@ public class Post {
     public void removeTag(Tag tag){
         tag.getPosts().remove(this);;
         tags.remove(tag);
+    }
+
+    @PrePersist
+    public void setTime(){
+        this.lastUpdate = new Timestamp(System.currentTimeMillis());
+    }
+
+    @PreUpdate
+    public void updateTime(){
+        this.lastUpdate = new Timestamp(System.currentTimeMillis());
     }
 }
