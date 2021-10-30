@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{nav_template.html}"
+>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+    <style>
+      #content{
+        margin-top: 50px;
+        text-align: center;
+      }
+    </style>
+</head>
+<body>
+    <div layout:fragment="content">
+      <h1>Personal Project Manager Tool</h1>
+      <p>Create your account to join active projects or start your own</p>
+      <a class="btn btn-primary" th:href="@{/account/sign-up}" role="button">Sign Up</a>
+      <a class="btn btn-secondary" th:href="@{/login}" role="button">Login</a>
+    </div>
+</body>
+</html>

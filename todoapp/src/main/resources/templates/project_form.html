@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{nav_template.html}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #content {
+            width: 40%;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 50px;
+        }
+        h1 {
+            text-align: center;
+        }
+
+        .form-control {
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="content" layout:fragment="content">
+        <h1>Create Project Form</h1>
+        <div>
+            <form th:action="@{/projects/create-update}" method="post" th:object=${project}>
+                <input type="text" class="form-control" id="projectName" placeholder="Project Name"
+                    th:field="*{projectName}">
+                <input type="text" class="form-control" id="projectIdentifier" placeholder="Unique Project Id"
+                    th:field="*{projectIdentifier}" required>
+                <textarea class="form-control" id="description" aria-label="With textarea" placeholder="description"
+                    th:field="*{description}"></textarea>
+                <input type="date" class="form-control" id="startDate" th:field="*{startDate}">
+                <input type="date" class="form-control" id="endDate" th:field="*{endDate}">
+                <button type="submit" class="btn btn-primary form-control">Submit</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
